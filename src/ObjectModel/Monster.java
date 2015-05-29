@@ -2,94 +2,88 @@ package ObjectModel;
 
 import Helper.IAttacking;
 
+public abstract class Monster implements IAttacking {
 
-public abstract class Monster implements IAttacking{
-	
-	private int _live = 0;
-	private String _name = "";
-	private int _attack = 0;
-	
-	public enum SkillType { 
-		Bite, 
-		Kick, 
-		Claw 
-	}
-	
-	private SkillType _skill;
+    private int hp = 0;
+    private String _name = "";
+    private int _attack = 0;
 
-	public void createMonster(String name, int live, int attack, SkillType skill){
-		setMonsterName(name);
-		setLive(live);
-		setSkill(skill);
-		setAttack(attack);
-	}
-	
-	public void setSkill(SkillType skill){
-		_skill = skill;
-	}
-	
-	public String getSkillName(){
-		return _skill.name().toString();
-	}
-	
-	protected void setLive(int live) {
-		_live = live;
-	}
+    public enum SkillType {
 
-	public int getLive() {
-		return _live;
-	}
+        BITE,
+        KICK,
+        CLAW
+    }
+    private SkillType _skill;
 
-	protected void setMonsterName(String name) {
-		_name = name;
-	}
+    protected Monster(String name, int live, int attack, SkillType skill) {
+        _name = name;
+        hp = live;
+        _skill = skill;
+        _attack = attack;
+    }
 
-	public String getMonsterName() {
-		return _name;
-	}
+    public void setSkill(SkillType skill) {
+        _skill = skill;
+    }
 
-	public int getAttack(boolean isSkillUsed) {
-		int attack = _attack;
-		if (isSkillUsed){
-			switch (_skill) {
-			case Bite:
-				attack = _attack * 2;
-				break;
-			case Kick:
-				attack = _attack * 5;
-				break;
-			case Claw:
-				attack = _attack * 10;
-				break;
-			default:
-				attack = _attack;
-				break;
-			}
-		}
-		return attack;
-	}
+    public String getSkillName() {
+        return _skill.name();
+    }
 
-	public void setAttack(int attack) {
-		_attack = attack;
-	}
+    protected void setHp(int live) {
+        hp = live;
+    }
 
-	protected boolean attackUsingSkill(Monster enemyMonster, boolean isSkillUsed) {
-		
-		int live = enemyMonster.getLive();
-		if (isSkillUsed){
-			System.out.println(getMonsterName() + " attack using skill " + getSkillName() + "("+getAttack(true)+")");
-			live = enemyMonster.getLive() - getAttack(true);
-		}else{
-			System.out.println(getMonsterName() + " attack ("+getAttack(false)+")");
-			live = enemyMonster.getLive() - getAttack(false);
-		}
-		enemyMonster.setLive(live);
-		if (enemyMonster.getLive() > 0){
-			System.out.println(enemyMonster.getMonsterName() + "(" + enemyMonster.getLive() +")");
-			return false;
-		}else {
-			System.out.println(enemyMonster.getMonsterName() + "(DEFEATED)");
-			return true;
-		}
-	}
+    public int getHp() {
+        return hp;
+    }
+
+    protected void setMonsterName(String name) {
+        _name = name;
+    }
+
+    public String getMonsterName() {
+        return _name;
+    }
+
+    public int getAttack(boolean isSkillUsed) {
+        if (isSkillUsed) {
+            switch (_skill) {
+                case BITE:
+                    return _attack * 2;
+                case KICK:
+                    return _attack * 5;
+                case CLAW:
+                    return _attack * 10;
+                default:
+                    return _attack;
+            }
+        }
+        return _attack;
+    }
+
+    public void setAttack(int attack) {
+        _attack = attack;
+    }
+
+    protected boolean attackUsingSkill(Monster enemy, boolean isSkillUsed) {
+
+        int live;
+        if (isSkillUsed) {
+            System.out.println(_name+ " attack using skill " + _skill.name() + "(" + getAttack(true) + ")");
+            live = enemy.hp - getAttack(true);
+        } else {
+            System.out.println(getMonsterName() + " attack (" + getAttack(false) + ")");
+            live = enemy.hp - getAttack(false);
+        }
+        enemy.hp=live;
+        if (enemy.getHp() > 0) {
+            System.out.println(enemy._name + "(" + enemy.hp + ")");
+            return false;
+        } else {
+            System.out.println(enemy._name + "(DEFEATED)");
+            return true;
+        }
+    }
 }

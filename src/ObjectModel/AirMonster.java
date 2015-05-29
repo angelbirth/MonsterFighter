@@ -4,7 +4,7 @@ package ObjectModel;
 public class AirMonster extends Monster{
 
 	public AirMonster(String name, int live, int attack, SkillType skill){
-		super.createMonster(name, live, attack, skill);
+		super(name, live, attack, skill);
 	}
 	
 	@Override

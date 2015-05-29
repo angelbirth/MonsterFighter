@@ -10,14 +10,14 @@ public class MonsterBattle {
 	
 	public static void main(String[] args){
 	
-		WaterMonster shark = new WaterMonster("Sharken", 2500, 100, SkillType.Bite);
-		WaterMonster whales = new WaterMonster("Whalesio", 5000, 20, SkillType.Bite);
+		WaterMonster shark = new WaterMonster("Sharken", 2500, 100, SkillType.BITE);
+		WaterMonster whales = new WaterMonster("Whalesio", 5000, 20, SkillType.BITE);
 		startBattle(shark, whales);
 	}
 	
 	private static void startBattle(Monster a, Monster b){
 		
-		System.out.println(a.getMonsterName() + "(" + a.getLive() +") Versus " + b.getMonsterName() + "(" + b.getLive() + ")");
+		System.out.println(a.getMonsterName() + "(" + a.getHp() +") Versus " + b.getMonsterName() + "(" + b.getHp() + ")");
 		System.out.println("+----------------------------------------------+");
 		
 		boolean result = false;
